@@ -39,7 +39,7 @@ func main() {
 		panic(err)
 	}
 
-	fileNames, err := recursiveSeachGoFileNames(dir)
+	fileNames, err := recursiveSearchGoFileNames(dir)
 	if err != nil {
 		panic(err)
 	}
@@ -49,7 +49,7 @@ func main() {
 			continue
 		}
 
-		targetStructs, packageName, imports, err := seachTargetStructs(fileName)
+		targetStructs, packageName, imports, err := searchTargetStructs(fileName)
 		if err != nil {
 			panic(err)
 		}
@@ -61,7 +61,7 @@ func main() {
 	}
 }
 
-func recursiveSeachGoFileNames(dir string) ([]string, error) {
+func recursiveSearchGoFileNames(dir string) ([]string, error) {
 	var files []string
 
 	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
@@ -79,12 +79,12 @@ func recursiveSeachGoFileNames(dir string) ([]string, error) {
 	return files, err
 }
 
-func seachTargetStructs(fileName string) ([]*ast.TypeSpec, string, []string, error) {
+func searchTargetStructs(fileName string) ([]*ast.TypeSpec, string, []string, error) {
 	packageName := ""
 	imports := []string{}
 
-	fset := token.NewFileSet()
-	node, err := parser.ParseFile(fset, fileName, nil, parser.ParseComments)
+	fileSet := token.NewFileSet()
+	node, err := parser.ParseFile(fileSet, fileName, nil, parser.ParseComments)
 	if err != nil {
 		return nil, packageName, imports, err
 	}
@@ -173,14 +173,14 @@ func createGetters(packageName string, imports []string, typeSpecs []*ast.TypeSp
 		getters.Fields = append(getters.Fields, getterFields...)
 	}
 
-	userdImports := make([]string, 0, len(usedImportMap))
+	usedImports := make([]string, 0, len(usedImportMap))
 	for _, imp := range usedImportMap {
 		if imp.Used {
-			userdImports = append(userdImports, imp.Name)
+			usedImports = append(usedImports, imp.Name)
 		}
 	}
 
-	getters.Imports = userdImports
+	getters.Imports = usedImports
 
 	return &getters
 }
