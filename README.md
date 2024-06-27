@@ -8,6 +8,12 @@ This tool automatically generates getter methods for Go structs annotated with /
 - Generates getter methods for struct fields
 - Output filename follows the format filename_getters.go
 
+## Install
+
+```
+$ go install github.com/yusei-wy/go-getters@latest
+```
+
 ## Usage:
 
 1. Annotate struct fields with //go:generate getters comment tag.
