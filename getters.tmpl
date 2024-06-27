@@ -1,0 +1,14 @@
+// Code generated. DO NOT EDIT.
+package {{.PackageName}}
+
+import (
+{{range .Imports}}
+	"{{.}}"
+{{end}}
+)
+
+{{range .Fields}}
+func (n {{.StructName}}) {{.MethodName}}() {{.FieldType}} {
+	return n.{{.FieldName}}
+}
+{{end}}
