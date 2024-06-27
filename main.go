@@ -2,19 +2,23 @@ package main
 
 import (
 	"bytes"
+	"embed"
 	"fmt"
 	"go/ast"
 	"go/format"
 	"go/parser"
 	"go/token"
-	"html/template"
 	"os"
 	"path/filepath"
 	"strings"
+	"text/template"
 
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
+
+//go:embed *.tmpl
+var tmplFiles embed.FS
 
 type Getters struct {
 	PackageName string
@@ -210,7 +214,7 @@ func getFiledTypeString(expr ast.Expr) string {
 }
 
 func generateGetters(fileName string, getters *Getters) {
-	tmpl, err := template.ParseFiles("getters.tmpl")
+	tmpl, err := template.ParseFS(tmplFiles, "getters.tmpl")
 	if err != nil {
 		panic(err)
 	}
