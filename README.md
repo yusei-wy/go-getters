@@ -11,7 +11,7 @@ This tool automatically generates getter methods for Go structs annotated with /
 ## Install
 
 ```
-$ go install github.com/yusei-wy/go-getters
+$ go install github.com/yusei-wy/go-getters@latest
 ```
 
 ## Usage:
