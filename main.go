@@ -12,9 +12,6 @@ import (
 	"path/filepath"
 	"strings"
 	"text/template"
-
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 )
 
 //go:embed *.tmpl
@@ -162,7 +159,7 @@ func createGetters(packageName string, imports []string, typeSpecs []*ast.TypeSp
 		getterFields := make([]GetterField, len(structType.Fields.List))
 		for i, field := range structType.Fields.List {
 			filedName := field.Names[0].Name
-			methodName := cases.Title(language.Und).String(filedName)
+			methodName := strings.ToUpper(filedName[0:1]) + filedName[1:]
 			fieldType := getFiledTypeString(field.Type)
 
 			getterFields[i] = NewGetterField(structName, methodName, filedName, fieldType)

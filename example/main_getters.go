@@ -26,3 +26,11 @@ func (n User) Birthday() time.Time {
 func (n User) Children() []User {
 	return n.children
 }
+
+func (n User) CreatedAt() time.Time {
+	return n.createdAt
+}
+
+func (n User) UpdatedAt() time.Time {
+	return n.updatedAt
+}

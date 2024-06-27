@@ -10,11 +10,13 @@ import (
 
 //go:generate getters
 type User struct {
-	id       uuid.UUID
-	name     string
-	age      int
-	birthday time.Time
-	children []User
+	id        uuid.UUID
+	name      string
+	age       int
+	birthday  time.Time
+	children  []User
+	createdAt time.Time
+	updatedAt time.Time
 }
 
 type Ast struct {
